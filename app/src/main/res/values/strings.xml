@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Iklaniku</string>
     <string name="title_activity_maps">Map</string>
+    <string name="server_client_id">YOUR_SERVER_CLIENT_ID</string>
+    <string name="logo">Google Logo</string>
+    <string name="logo_description">Spot-Iklan\n Sign-in QuickStart</string>
 </resources>

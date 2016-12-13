@@ -20,13 +20,13 @@
             android:id="@+id/google_icon"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="100dp"
-            android:contentDescription="Google Logo"
+            android:contentDescription="@string/logo"
             android:src="@drawable/googleg_color"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Spot-Iklan\n Sign-in QuickStart"
+            android:text="@string/logo_description"
             android:gravity="center"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="36sp"/>
@@ -34,7 +34,8 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="#FFFFFF">
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
             android:layout_width="wrap_content"
