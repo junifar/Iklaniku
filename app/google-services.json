@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "875922358983",
+    "project_id": "iklaniku-app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875922358983:android:a07d2229aabe515e",
+        "android_client_info": {
+          "package_name": "com.rubahapi.iklaniku"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875922358983-lg042ikc6ai4fcu95fo53he6qh17a0i1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rubahapi.iklaniku",
+            "certificate_hash": "45F48B0450665CCEC8EBB064792571107F6F2275"
+          }
+        },
+        {
+          "client_id": "875922358983-99m8tt3m748hckn9igtfdlbhlcqfgiq6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBj8ALdkaGPXPLTFFYM04BQJQ9oTfAlp14"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
