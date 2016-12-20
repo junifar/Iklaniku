@@ -4,4 +4,9 @@
     <string name="server_client_id">YOUR_SERVER_CLIENT_ID</string>
     <string name="logo">Google Logo</string>
     <string name="logo_description">Spot-Iklan\n Sign-in QuickStart</string>
+    <string name="signed_in_fmt">Signed in as: %s</string>
+    <string name="signed_out_message">Signed out</string>
+    <string name="signed_out_label">Signed Out</string>
+    <string name="sign_out_button_label">Sign Out</string>
+    <string name="disconnect_label_button">Disconnect</string>
 </resources>
