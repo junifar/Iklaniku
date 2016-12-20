@@ -2,7 +2,10 @@ package com.rubahapi.iklaniku;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView statusTextView;
     private ProgressDialog mProgressDialog;
 
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
                 .build();
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     @Override
@@ -116,6 +123,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 statusTextView.setText(getString(R.string.signed_in_fmt, account.getDisplayName() + "\n your google ID is : " +
                         account.getId() + "\n Your name is : " + account.getDisplayName()));
             }
+
+            if (account != null) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(getString(R.string.google_id),account.getId());
+                editor.putString(getString(R.string.username),account.getDisplayName());
+                Uri uri = account.getPhotoUrl();
+                if(uri != null){
+                    editor.putString("image_profile", account.getPhotoUrl().getPath());
+                }
+                editor.apply();
+            }
+
             updateUI(true);
         }else{
             updateUI(false);
@@ -124,8 +143,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void updateUI(boolean signedIn) {
         if(signedIn){
-            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+//            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
+//            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
         }else{
             statusTextView.setText(R.string.signed_out_message);
 

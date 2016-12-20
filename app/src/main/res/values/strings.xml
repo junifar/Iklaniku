@@ -9,4 +9,7 @@
     <string name="signed_out_label">Signed Out</string>
     <string name="sign_out_button_label">Sign Out</string>
     <string name="disconnect_label_button">Disconnect</string>
+    <string name="APP_PREFERENCE">SpotPref</string>
+    <string name="google_id">GoogleID</string>
+    <string name="username">username</string>
 </resources>
