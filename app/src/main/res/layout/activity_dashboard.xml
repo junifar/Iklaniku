@@ -12,7 +12,8 @@
         android:layout_weight="1"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:background="@color/wallet_bright_foreground_disabled_holo_light">
+        android:background="@color/wallet_bright_foreground_disabled_holo_light"
+        android:id="@+id/profile_layout">
         <FrameLayout
             android:layout_width="128dp"
             android:layout_height="match_parent"
@@ -52,6 +53,7 @@
         android:orientation="vertical"
         android:padding="10dp">
         <ImageView
+            android:id="@+id/image_vehicle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/vario"
@@ -78,7 +80,8 @@
         android:layout_weight="1"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:baselineAligned="false">
+        android:baselineAligned="false"
+        android:id="@+id/layout_quest">
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
