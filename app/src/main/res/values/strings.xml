@@ -12,4 +12,13 @@
     <string name="APP_PREFERENCE">SpotPref</string>
     <string name="google_id">GoogleID</string>
     <string name="username">username</string>
+    <string name="name_edit_hint">Name</string>
+    <string name="address_edit_hint">Address</string>
+    <string name="image_profile_descriptor">Image Profile</string>
+    <string name="gender_list_prompt">Choose Gender</string>
+    <string name="female_radio_text">Female</string>
+    <string name="male_radio_text">Male</string>
+    <string name="driver_license_edit_hint">Driver License ID</string>
+    <string name="identity_card_edit_hint">Identity card</string>
+    <string name="birthday_edit_hint">Birthday</string>
 </resources>
