@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,7 +15,7 @@ import java.util.Calendar;
 
 import static com.rubahapi.iklaniku.R.id.birthday_edit;
 
-public class ProfileActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener, OnDatePickerClickListener {
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener, OnDatePickerClickListener {
 
     private TextView birthdayTextView;
 
@@ -24,7 +26,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         birthdayTextView = (TextView) findViewById(R.id.birthday_edit);
         birthdayTextView.setOnClickListener(this);
-        birthdayTextView.setOnFocusChangeListener(this);
 
         birthdayTextView.setInputType(InputType.TYPE_NULL);
     }
@@ -36,6 +37,26 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 birthday_edit_OnClick();
                 break;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.profile, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_name) {
+//            return true;
+//        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void birthday_edit_OnClick() {
@@ -66,11 +87,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             bundle.putInt("day",mDay);
         }
 
-//        Log.d("RESULT : ", splitString(birthdayTextView.getText().toString(),0) );
-
-//        bundle.putInt("year", 2017);
-//        bundle.putInt("month",1);
-//        bundle.putInt("day",1);
         newFragment.setArguments(bundle);
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
@@ -78,15 +94,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private String splitString(String value, int retNum){
         String[] result = value.split("-");
         return result[retNum];
-    }
-
-    @Override
-    public void onFocusChange(View view, boolean b) {
-        switch (view.getId()){
-            case birthday_edit:
-                birthday_edit_OnClick();
-                break;
-        }
     }
 
     @Override
