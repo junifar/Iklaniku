@@ -69,8 +69,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/birthday_edit_hint"
-                    android:inputType="date"
-                    android:id="@+id/birthday_edit"/>
+                    android:inputType="none"
+                    android:id="@+id/birthday_edit"
+                    />
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
