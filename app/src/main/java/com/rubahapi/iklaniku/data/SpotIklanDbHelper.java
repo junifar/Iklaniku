@@ -5,15 +5,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Created by prasetia on 1/10/2017.
+ * Created by prasetia on 1/10/2017
  */
 
-public class SpotIklanDbHelper extends SQLiteOpenHelper {
+class SpotIklanDbHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DB_NAME = "spotiklan.db";
 
-    public SpotIklanDbHelper(Context context) {
+    SpotIklanDbHelper(Context context) {
         super(context, DB_NAME, null, DATABASE_VERSION);
     }
 

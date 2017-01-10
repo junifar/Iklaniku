@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 /**
- * Created by prasetia on 1/10/2017.
+ * Created by prasetia on 1/10/2017
  */
 
 public class SpotIklanProvider extends ContentProvider {
