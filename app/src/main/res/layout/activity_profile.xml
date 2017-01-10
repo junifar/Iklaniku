@@ -20,11 +20,6 @@
             app:civ_border_width="2dp"
             app:civ_border_color="#FFFFFFFF"
             android:layout_gravity="center"/>
-        <!--<ImageView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:src="@drawable/yoyo"-->
-            <!--android:contentDescription="@string/image_profile_descriptor"/>-->
     </FrameLayout>
     <ScrollView
         android:layout_width="match_parent"
