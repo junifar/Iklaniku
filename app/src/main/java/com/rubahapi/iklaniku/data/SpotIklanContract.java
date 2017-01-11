@@ -12,9 +12,11 @@ import android.provider.BaseColumns;
 public class SpotIklanContract {
 
     public static final String CONTENT_AUTHORITY = "com.rubahapi.iklaniku";
-    private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     public static final String PATH_SPOT_IKLAN = "spotiklan";
+
+    private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+    public static final Uri VEHICLE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY + "/" + PATH_SPOT_IKLAN + "/" + VehicleEntry.PATH_VEHICLE);
 
     public static final class VehicleEntry implements BaseColumns{
 
