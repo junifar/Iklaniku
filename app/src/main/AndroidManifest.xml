@@ -58,6 +58,12 @@
             android:name=".QuestSelectActivity"
             android:parentActivityName=".DashboardActivity"
             android:theme="@style/Theme.AppCompat"/>
+
+        <provider
+            android:authorities="com.rubahapi.iklaniku"
+            android:name=".data.SpotIklanProvider"
+            android:exported="false"
+            android:syncable="true"/>
     </application>
 
 </manifest>
