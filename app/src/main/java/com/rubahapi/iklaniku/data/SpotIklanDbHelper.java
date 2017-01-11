@@ -8,12 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by prasetia on 1/10/2017
  */
 
-class SpotIklanDbHelper extends SQLiteOpenHelper {
+public class SpotIklanDbHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DB_NAME = "spotiklan.db";
 
-    SpotIklanDbHelper(Context context) {
+    public SpotIklanDbHelper(Context context) {
         super(context, DB_NAME, null, DATABASE_VERSION);
     }
 
@@ -21,7 +21,7 @@ class SpotIklanDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         final String SQL_CREATE_VEHICLE_TABLE = "CREATE TABLE " + SpotIklanContract.VehicleEntry.TABLE_NAME + " (" +
-                SpotIklanContract.VehicleEntry.COLUMN_ID + " INTEGER PRIMARY_KEY AUTOINCREMENT," +
+                SpotIklanContract.VehicleEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 SpotIklanContract.VehicleEntry.COLUMN_NAME + " TEXT NOT NULL," +
                 SpotIklanContract.VehicleEntry.COLUMN_PLAT_NUMBER + " TEXT NOT NULL," +
                 SpotIklanContract.VehicleEntry.COLUMN_IMAGE_PATH + " TEXT," +

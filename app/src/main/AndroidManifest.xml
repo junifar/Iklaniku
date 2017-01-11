@@ -64,6 +64,8 @@
             android:name=".data.SpotIklanProvider"
             android:exported="false"
             android:syncable="true"/>
+
+        <service android:name=".service.VehicleService"/>
     </application>
 
 </manifest>
