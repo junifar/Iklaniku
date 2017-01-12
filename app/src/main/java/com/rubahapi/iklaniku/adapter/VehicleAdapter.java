@@ -6,8 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.rubahapi.iklaniku.R;
 import com.rubahapi.iklaniku.VehicleSelectActivity;
 import com.rubahapi.iklaniku.data.SpotIklanContract;
@@ -52,9 +54,11 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        Context context = holder.imageView.getContext();
         if (null != cursor){
             cursor.moveToPosition(position);
             holder.textView.setText(cursor.getString(getArrayPosition(SpotIklanContract.VehicleEntry.COLUMN_NAME)));
+            Glide.with(context).load(cursor.getString(getArrayPosition(SpotIklanContract.VehicleEntry.COLUMN_IMAGE_PATH))).into(holder.imageView);
         }
     }
 
@@ -69,10 +73,12 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView textView;
+        public ImageView imageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.name_text_view);
+            imageView = (ImageView) itemView.findViewById(R.id.vehicle_image_view);
         }
     }
 }
