@@ -8,7 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.rubahapi.iklaniku.adapter.VehicleAdapter;
@@ -34,8 +34,8 @@ public class VehicleSelectActivity extends AppCompatActivity implements LoaderMa
         setContentView(R.layout.activity_vehicle_select);
 
         RecyclerView vehicleRecyclerView = (RecyclerView) findViewById(R.id.vehicle_recycler_view);
-//        vehicleRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        vehicleRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        vehicleRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+//        vehicleRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         vehicleAdapter = new VehicleAdapter(null, this);
         vehicleRecyclerView.setAdapter(vehicleAdapter);
