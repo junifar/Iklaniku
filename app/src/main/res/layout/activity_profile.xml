@@ -6,98 +6,114 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.rubahapi.iklaniku.ProfileActivity"
-    android:orientation="vertical">
-    <FrameLayout
+    android:orientation="vertical"
+    android:gravity="center">
+    <ProgressBar
+        android:id="@+id/profile_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="9"
-        android:layout_gravity="center"
-        android:padding="5dp">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/yoyo"
-            app:civ_border_width="2dp"
-            app:civ_border_color="#FFFFFFFF"
-            android:layout_gravity="center"/>
-    </FrameLayout>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="16"
-        android:paddingTop="10dp">
-        <LinearLayout
+        android:layout_height="match_parent"
+        android:id="@+id/profile_layout"
+        android:orientation="vertical">
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <android.support.design.widget.TextInputLayout
+            android:layout_height="0dp"
+            android:layout_weight="9"
+            android:layout_gravity="center"
+            android:padding="5dp">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/yoyo"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FFFFFFFF"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="16"
+            android:paddingTop="10dp">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/name_edit_wrapper">
-                <EditText
+                android:orientation="vertical">
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/name_edit"
-                    android:hint="@string/name_edit_hint"/>
-            </android.support.design.widget.TextInputLayout>
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <android.support.v7.widget.AppCompatRadioButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/male_radio_text"/>
-                <android.support.v7.widget.AppCompatRadioButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/female_radio_text"/>
-            </RadioGroup>
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/identity_card_id_edit_wrapper">
-                <EditText
+                    android:id="@+id/name_edit_wrapper">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/name_edit"
+                        android:hint="@string/name_edit_hint"/>
+                </android.support.design.widget.TextInputLayout>
+                <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/identity_card_id_edit"
-                    android:hint="@string/identity_card_edit_hint"/>
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/birthday_edit_wrapper">
-                <EditText
+                    android:orientation="horizontal">
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/male_radio_text"/>
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/female_radio_text"/>
+                </RadioGroup>
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/birthday_edit_hint"
-                    android:inputType="none"
-                    android:id="@+id/birthday_edit"
-                    />
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/driver_license_edit_wrapper">
-                <EditText
+                    android:id="@+id/identity_card_id_edit_wrapper">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/identity_card_id_edit"
+                        android:hint="@string/identity_card_edit_hint"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/driver_license_edit"
-                    android:hint="@string/driver_license_edit_hint"/>
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/address_edit_wrapper">
-                <EditText
+                    android:id="@+id/birthday_edit_wrapper">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/birthday_edit_hint"
+                        android:inputType="none"
+                        android:id="@+id/birthday_edit"
+                        />
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:id="@+id/address_edit"
-                    android:hint="@string/address_edit_hint"/>
-            </android.support.design.widget.TextInputLayout>
-        </LinearLayout>
-    </ScrollView>
+                    android:id="@+id/driver_license_edit_wrapper">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/driver_license_edit"
+                        android:hint="@string/driver_license_edit_hint"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/address_edit_wrapper">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:id="@+id/address_edit"
+                        android:hint="@string/address_edit_hint"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 </LinearLayout>
