@@ -21,6 +21,18 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.rubahapi.iklaniku.pojo.Driver;
+import com.rubahapi.iklaniku.service.DriverApiService;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.rubahapi.iklaniku.config.ServerURL.BASE_API_URL;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -119,6 +131,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (result.isSuccess()){
             GoogleSignInAccount account = result.getSignInAccount();
             statusTextView.setText(account != null ? account.getDisplayName() : null);
+
+            syncToServer(account.getId(), account.getDisplayName());
+
             if (account != null) {
                 statusTextView.setText(getString(R.string.signed_in_fmt, account.getDisplayName() + "\n your google ID is : " +
                         account.getId() + "\n Your name is : " + account.getDisplayName()));
@@ -141,6 +156,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void syncToServer(String gid, String username){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_API_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        DriverApiService driverApiService = retrofit.create(DriverApiService.class);
+
+        Call<List<Driver>> result = driverApiService.getDriverProfile(gid, username);
+
+        result.enqueue(new Callback<List<Driver>>() {
+            @Override
+            public void onResponse(Call<List<Driver>> call, Response<List<Driver>> response) {
+            }
+
+            @Override
+            public void onFailure(Call<List<Driver>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
     private void updateUI(boolean signedIn) {
         if(signedIn){
             Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
@@ -148,8 +185,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
-//            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-//            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
         }else{
             statusTextView.setText(R.string.signed_out_message);
 
