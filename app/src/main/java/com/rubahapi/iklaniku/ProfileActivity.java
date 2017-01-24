@@ -20,6 +20,7 @@ import com.rubahapi.iklaniku.service.DriverApiService;
 import java.util.Calendar;
 import java.util.List;
 
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_profile);
+        ButterKnife.bind(this);
 
         nameEditTextView = (TextView) findViewById(R.id.name_edit);
         identityNumberTextView = (TextView) findViewById(R.id.identity_card_id_edit);
