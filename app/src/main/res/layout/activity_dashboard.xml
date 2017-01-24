@@ -37,12 +37,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="User Name"
-                android:id="@+id/textView1"
+                android:id="@+id/textViewUserName"
                 android:textSize="24sp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Jakarta, ITC Cempaka Mas"
+                android:id="@+id/textViewCurrentLocation"
                 android:textSize="20sp"/>
         </LinearLayout>
     </LinearLayout>

@@ -21,6 +21,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     Button buttonStart;
     Button buttonStop;
 
+    TextView textViewUserName;
+    TextView textViewCurrentLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,14 +31,18 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        TextView textView1 = (TextView) findViewById(R.id.textView1);
+        textViewUserName = (TextView) findViewById(R.id.textViewUserName);
+        textViewCurrentLocation = (TextView) findViewById(R.id.textViewCurrentLocation);
+
         vehicleImage = (ImageView) findViewById(R.id.image_vehicle);
         layoutQuest = (LinearLayout) findViewById(R.id.layout_quest);
         profileLayout = (LinearLayout) findViewById(R.id.profile_layout);
         buttonStart = (Button) findViewById(R.id.buttonStart);
         buttonStop = (Button) findViewById(R.id.buttonStop);
 
-        textView1.setText(sharedPreferences.getString(getString(R.string.username),""));
+        textViewUserName.setText(sharedPreferences.getString(getString(R.string.username),""));
+//        textViewCurrentLocation.setText(sharedPreferences.getString(getString(R.string.profile_key),""));
+
         vehicleImage.setOnClickListener(this);
         layoutQuest.setOnClickListener(this);
         profileLayout.setOnClickListener(this);

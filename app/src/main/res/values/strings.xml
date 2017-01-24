@@ -12,6 +12,7 @@
     <string name="APP_PREFERENCE">SpotPref</string>
     <string name="google_id">GoogleID</string>
     <string name="username">username</string>
+    <string name="profile_key">profile_key</string>
     <string name="name_edit_hint">Name</string>
     <string name="address_edit_hint">Address</string>
     <string name="image_profile_descriptor">Image Profile</string>

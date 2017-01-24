@@ -1,21 +1,17 @@
 package com.rubahapi.iklaniku;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rubahapi.iklaniku.listener.OnDatePickerClickListener;
 import com.rubahapi.iklaniku.pojo.Driver;
@@ -36,15 +32,28 @@ import static com.rubahapi.iklaniku.config.ServerURL.BASE_API_URL;
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener, OnDatePickerClickListener {
 
     private TextView birthdayTextView;
+    private TextView nameEditTextView;
+    private TextView identityNumberTextView;
+    private TextView driverLicenseIdTextView;
+
     private ProgressDialog mProgressDialog;
     SharedPreferences sharedPreferences;
-    private View profileLayout;
-    private View progressView;
+
+    @Override
+    protected void onStart() {
+        showProgressDialog();
+        super.onStart();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_profile);
+
+        nameEditTextView = (TextView) findViewById(R.id.name_edit);
+        identityNumberTextView = (TextView) findViewById(R.id.identity_card_id_edit);
+        driverLicenseIdTextView = (TextView) findViewById(R.id.driver_license_edit);
 
         birthdayTextView = (TextView) findViewById(R.id.birthday_edit);
         birthdayTextView.setOnClickListener(this);
@@ -52,14 +61,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        profileLayout = findViewById(R.id.profile_layout);
-        progressView = findViewById(R.id.profile_progress);
-
 //        showProgress(true);
-        getProfileToServer(sharedPreferences.getString(getString(R.string.google_id),""),sharedPreferences.getString(getString(R.string.username),""));
+        getProfileToServer(sharedPreferences.getString(getString(R.string.profile_key),""));
     }
 
-    private void getProfileToServer(String gid, String name){
+    private void getProfileToServer(String gid){
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_API_URL)
@@ -68,17 +74,24 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         DriverApiService driverApiService = retrofit.create(DriverApiService.class);
 
-        Call<List<Driver>> result = driverApiService.getDriverProfile(gid, name);
+        Call<List<Driver>> result = driverApiService.getDriverProfileEnc(gid);
 
         result.enqueue(new Callback<List<Driver>>() {
             @Override
             public void onResponse(Call<List<Driver>> call, Response<List<Driver>> response) {
-                Toast.makeText(ProfileActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                for (Driver driver : response.body()){
+                    nameEditTextView.setText(driver.getName());
+                    identityNumberTextView.setText(driver.getIdentityNumber());
+                    driverLicenseIdTextView.setText(driver.getLicenseId());
+                    hideProgressDialog();
+                    showAlertDialog();
+                }
             }
 
             @Override
             public void onFailure(Call<List<Driver>> call, Throwable t) {
                 t.printStackTrace();
+                hideProgressDialog();
             }
         });
     }
@@ -159,9 +172,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setMessage("Loading ...");
             mProgressDialog.setIndeterminate(true);
-            mProgressDialog.setCancelable(false);
-            mProgressDialog.setCanceledOnTouchOutside(false);
         }
+
         mProgressDialog.show();
     }
 
@@ -171,44 +183,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2){
-
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            profileLayout.setVisibility(show ? View.GONE : View.VISIBLE);
-            profileLayout.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(
-                    new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animator) {}
-
-                        @Override
-                        public void onAnimationEnd(Animator animator) {
-                            profileLayout.setVisibility(show ? View.GONE : View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animator) {}
-
-                        @Override
-                        public void onAnimationRepeat(Animator animator) {}
-                    });
-
-            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            progressView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(
-                    new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                        }
-                    });
-        }else {
-            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            profileLayout.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+    private void showAlertDialog(){
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        dlgAlert.setMessage("This is an alert with no consequence");
+        dlgAlert.setTitle("App Title");
+        dlgAlert.setPositiveButton("OK", null);
+        dlgAlert.setCancelable(false);
+        dlgAlert.create().show();
     }
 }

@@ -4,6 +4,7 @@ import com.rubahapi.iklaniku.pojo.Driver;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -32,4 +33,10 @@ public interface DriverApiService {
     @POST("api/driver/profile/{gid}")
     Call<List<Driver>> getDriverProfile(@Path("gid") String gid,
                                   @Field("name") String name);
+
+    @POST("api/driver/profile/key/{gid}")
+    Call<ResponseBody> getDriverProfileKey(@Path("gid") String gid);
+
+    @POST("api/driver/profile/get/{gid}")
+    Call<List<Driver>> getDriverProfileEnc(@Path("gid") String gid);
 }

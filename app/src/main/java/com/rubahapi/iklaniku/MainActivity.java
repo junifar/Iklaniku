@@ -24,8 +24,10 @@ import com.google.android.gms.common.api.Status;
 import com.rubahapi.iklaniku.pojo.Driver;
 import com.rubahapi.iklaniku.service.DriverApiService;
 
+import java.io.IOException;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -133,6 +135,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             statusTextView.setText(account != null ? account.getDisplayName() : null);
 
             syncToServer(account.getId(), account.getDisplayName());
+            Log.d("Trace ID", "=====" + account.getId());
+            getProfileKey(account.getId());
 
             if (account != null) {
                 statusTextView.setText(getString(R.string.signed_in_fmt, account.getDisplayName() + "\n your google ID is : " +
@@ -156,7 +160,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void syncToServer(String gid, String username){
+    private void getProfileKey(String gid){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_API_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        DriverApiService driverApiService = retrofit.create(DriverApiService.class);
+
+        Call<ResponseBody> result = driverApiService.getDriverProfileKey(gid);
+
+        result.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                try {
+                    String result = response.body().string();
+                    editor.putString(getString(R.string.profile_key),result);
+                    editor.apply();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void syncToServer(final String gid, String username){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -169,6 +203,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         result.enqueue(new Callback<List<Driver>>() {
             @Override
             public void onResponse(Call<List<Driver>> call, Response<List<Driver>> response) {
+//                getProfileKey(gid);
             }
 
             @Override
