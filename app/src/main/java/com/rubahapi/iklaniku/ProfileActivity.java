@@ -20,22 +20,23 @@ import com.rubahapi.iklaniku.service.DriverApiService;
 import java.util.Calendar;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnFocusChange;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.rubahapi.iklaniku.R.id.birthday_edit;
 import static com.rubahapi.iklaniku.config.ServerURL.BASE_API_URL;
 
-public class ProfileActivity extends AppCompatActivity implements View.OnClickListener, OnDatePickerClickListener {
+public class ProfileActivity extends AppCompatActivity implements OnDatePickerClickListener {
 
-    private TextView birthdayTextView;
-    private TextView nameEditTextView;
-    private TextView identityNumberTextView;
-    private TextView driverLicenseIdTextView;
+    @BindView(R.id.birthday_edit) TextView birthdayTextView;
+    @BindView(R.id.name_edit) TextView nameEditTextView;
+    @BindView(R.id.identity_card_id_edit) TextView identityNumberTextView;
+    @BindView(R.id.driver_license_edit) TextView driverLicenseIdTextView;
 
     private ProgressDialog mProgressDialog;
     SharedPreferences sharedPreferences;
@@ -53,17 +54,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
-        nameEditTextView = (TextView) findViewById(R.id.name_edit);
-        identityNumberTextView = (TextView) findViewById(R.id.identity_card_id_edit);
-        driverLicenseIdTextView = (TextView) findViewById(R.id.driver_license_edit);
-
-        birthdayTextView = (TextView) findViewById(R.id.birthday_edit);
-        birthdayTextView.setOnClickListener(this);
         birthdayTextView.setInputType(InputType.TYPE_NULL);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-//        showProgress(true);
         getProfileToServer(sharedPreferences.getString(getString(R.string.profile_key),""));
     }
 
@@ -86,7 +80,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     identityNumberTextView.setText(driver.getIdentityNumber());
                     driverLicenseIdTextView.setText(driver.getLicenseId());
                     hideProgressDialog();
-                    showAlertDialog();
                 }
             }
 
@@ -98,13 +91,29 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         });
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case birthday_edit:
-                birthday_edit_OnClick();
-                break;
+    @OnFocusChange(R.id.birthday_edit)
+    public void OnClickBirthdayEdit(View view){
+        final Calendar c = Calendar.getInstance();
+        int mYear = c.get(Calendar.YEAR);
+        int mMonth = c.get(Calendar.MONTH);
+        int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+        String birthday = birthdayTextView.getText().toString();
+
+        DialogFragment newFragment = new DatePickerFragment();
+        Bundle bundle = new Bundle();
+        if(!birthday.equals("")){
+            bundle.putInt("year", Integer.parseInt(splitString(birthday,2)));
+            bundle.putInt("month",Integer.parseInt(splitString(birthday,1)));
+            bundle.putInt("day",Integer.parseInt(splitString(birthday,0)));
+        }else{
+            bundle.putInt("year", mYear);
+            bundle.putInt("month",mMonth);
+            bundle.putInt("day",mDay);
         }
+
+        newFragment.setArguments(bundle);
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
     @Override
@@ -125,38 +134,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 //            return true;
 //        }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void birthday_edit_OnClick() {
-        final Calendar c = Calendar.getInstance();
-        int mYear = c.get(Calendar.YEAR);
-        int mMonth = c.get(Calendar.MONTH);
-        int mDay = c.get(Calendar.DAY_OF_MONTH);
-//
-//        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-//            @Override
-//            public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-//                birthdayTextView.setText(dayOfMonth + "-" + (monthOfYear-1) + "-" + year);
-//            }
-//        },mYear, mMonth, mDay);
-//
-//        datePickerDialog.show();
-        String birthday = birthdayTextView.getText().toString();
-
-        DialogFragment newFragment = new DatePickerFragment();
-        Bundle bundle = new Bundle();
-        if(!birthday.equals("")){
-            bundle.putInt("year", Integer.parseInt(splitString(birthday,2)));
-            bundle.putInt("month",Integer.parseInt(splitString(birthday,1)));
-            bundle.putInt("day",Integer.parseInt(splitString(birthday,0)));
-        }else{
-            bundle.putInt("year", mYear);
-            bundle.putInt("month",mMonth);
-            bundle.putInt("day",mDay);
-        }
-
-        newFragment.setArguments(bundle);
-        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
     private String splitString(String value, int retNum){
