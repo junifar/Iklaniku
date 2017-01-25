@@ -30,6 +30,12 @@ public class Driver {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+    @SerializedName("birthday")
+    @Expose
+    private String birthday;
+    @SerializedName("gender")
+    @Expose
+    private int gender;
 
     public Integer getId() {
         return id;
@@ -95,4 +101,19 @@ public class Driver {
         this.updatedAt = updatedAt;
     }
 
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
 }

@@ -21,6 +21,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.firebase.crash.FirebaseCrash;
 import com.rubahapi.iklaniku.pojo.Driver;
 import com.rubahapi.iklaniku.service.DriverApiService;
 
@@ -231,6 +232,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
+        FirebaseCrash.log("Activity created");
+        FirebaseCrash.report(new Exception("My first Android non-fatal error"));
 
         OptionalPendingResult<GoogleSignInResult> optionalPendingResult = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
 

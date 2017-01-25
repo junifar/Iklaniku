@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.rubahapi.iklaniku.R.id.action_done;
 import static com.rubahapi.iklaniku.config.ServerURL.BASE_API_URL;
 
 public class ProfileActivity extends AppCompatActivity implements OnDatePickerClickListener {
@@ -37,13 +39,18 @@ public class ProfileActivity extends AppCompatActivity implements OnDatePickerCl
     @BindView(R.id.name_edit) TextView nameEditTextView;
     @BindView(R.id.identity_card_id_edit) TextView identityNumberTextView;
     @BindView(R.id.driver_license_edit) TextView driverLicenseIdTextView;
+    @BindView(R.id.address_edit) TextView addressTextView;
 
+    private Retrofit retrofit;
+    private DriverApiService driverApiService;
     private ProgressDialog mProgressDialog;
     SharedPreferences sharedPreferences;
 
     @Override
     protected void onStart() {
         showProgressDialog();
+
+        getProfileToServer(sharedPreferences.getString(getString(R.string.profile_key),""));
         super.onStart();
     }
 
@@ -54,22 +61,18 @@ public class ProfileActivity extends AppCompatActivity implements OnDatePickerCl
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         birthdayTextView.setInputType(InputType.TYPE_NULL);
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        getProfileToServer(sharedPreferences.getString(getString(R.string.profile_key),""));
-    }
-
-    private void getProfileToServer(String gid){
-
-        Retrofit retrofit = new Retrofit.Builder()
+        retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        DriverApiService driverApiService = retrofit.create(DriverApiService.class);
+        driverApiService = retrofit.create(DriverApiService.class);
+    }
 
+    private void getProfileToServer(String gid){
         Call<List<Driver>> result = driverApiService.getDriverProfileEnc(gid);
 
         result.enqueue(new Callback<List<Driver>>() {
@@ -79,6 +82,8 @@ public class ProfileActivity extends AppCompatActivity implements OnDatePickerCl
                     nameEditTextView.setText(driver.getName());
                     identityNumberTextView.setText(driver.getIdentityNumber());
                     driverLicenseIdTextView.setText(driver.getLicenseId());
+                    birthdayTextView.setText(driver.getBirthday());
+                    addressTextView.setText(driver.getAddress());
                     hideProgressDialog();
                 }
             }
@@ -124,16 +129,42 @@ public class ProfileActivity extends AppCompatActivity implements OnDatePickerCl
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_name) {
-//            return true;
-//        }
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == action_done) {
+            action_done_click();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void action_done_click() {
+        showProgressDialog();
+        Log.d("Data Sent", sharedPreferences.getString(getString(R.string.profile_key),""));
+        Call<Driver> result = driverApiService.updateDriverRecord(sharedPreferences.getString(getString(R.string.profile_key),""),
+                nameEditTextView.getText().toString(), addressTextView.getText().toString(),
+                identityNumberTextView.getText().toString(), driverLicenseIdTextView.getText().toString());
+
+        result.enqueue(new Callback<Driver>() {
+            @Override
+            public void onResponse(Call<Driver> call, Response<Driver> response) {
+                hideProgressDialog();
+                showAlertDialog("Update Success");
+            }
+
+            @Override
+            public void onFailure(Call<Driver> call, Throwable t) {
+                t.printStackTrace();
+                hideProgressDialog();
+                showAlertDialog("No data Found");
+            }
+        });
+
+//        Toast.makeText(ProfileActivity.this,"Its work's", Toast.LENGTH_SHORT).show();
     }
 
     private String splitString(String value, int retNum){
@@ -162,10 +193,10 @@ public class ProfileActivity extends AppCompatActivity implements OnDatePickerCl
         }
     }
 
-    private void showAlertDialog(){
+    private void showAlertDialog(String message){
         AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
-        dlgAlert.setMessage("This is an alert with no consequence");
-        dlgAlert.setTitle("App Title");
+        dlgAlert.setMessage(message);
+        dlgAlert.setTitle("Information");
         dlgAlert.setPositiveButton("OK", null);
         dlgAlert.setCancelable(false);
         dlgAlert.create().show();

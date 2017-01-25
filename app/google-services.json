@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "24917657313",
-    "project_id": "prasetia-ads"
+    "firebase_url": "https://prasetia-ads.firebaseio.com",
+    "project_id": "prasetia-ads",
+    "storage_bucket": "prasetia-ads.appspot.com"
   },
   "client": [
     {
@@ -13,12 +15,28 @@
       },
       "oauth_client": [
         {
+          "client_id": "24917657313-8djihncmdg2ob6s3jifo736guhjtoq0r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rubahapi.iklaniku",
+            "certificate_hash": "F53F467E9A26DCB0EF3F24B53EBBE25D58BD6CE2"
+          }
+        },
+        {
           "client_id": "24917657313-nnapbkdri4923lat5369mml1j0eimsps.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.rubahapi.iklaniku",
             "certificate_hash": "45F48B0450665CCEC8EBB064792571107F6F2275"
           }
+        },
+        {
+          "client_id": "24917657313-jbl2oij9i7dll78r2qk28o0r6lunkk6f.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "24917657313-srs19lehrh08f3sv7ar3q888j7ldgm2p.apps.googleusercontent.com",
+          "client_type": 3
         },
         {
           "client_id": "24917657313-0pepfpk2q0usfst14ppv694612q1k3qa.apps.googleusercontent.com",
@@ -35,11 +53,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24917657313-jbl2oij9i7dll78r2qk28o0r6lunkk6f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
